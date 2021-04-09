@@ -12,8 +12,23 @@
 
   </head>
   <body>
-    {% block bodyblock %}
-      base body
-    {% endblock %}
+    <div class="container">
+
+      {% if user.is_authenticated %}
+        <p>authenticated</p>
+      {% else %}
+        <p>not authenticated</p>
+      {% endif %}
+
+    </div>
+
+    <div class="container">
+
+      {% block bodyblock %}
+        base body
+      {% endblock %}
+
+    </div>
+
   </body>
 </html>
