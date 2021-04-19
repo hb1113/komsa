@@ -9,9 +9,9 @@ class QuotePost(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null=True)
-    likes = models.IntegerField(default=0)
-    comments = models.IntegerField(default=0)
-    shares = models.IntegerField(default=0)
+    likes = models.PositiveIntegerField(default=0)
+    comments = models.PositiveIntegerField(default=0)
+    shares = models.PositiveIntegerField(default=0)
 
     def publish(self):
         self.published_date = timezone.now()
@@ -24,13 +24,13 @@ class QuotePost(models.Model):
 class Comment(models.Model):
 
         text = models.CharField(max_length=256)
-        post = models.ForeignKey(post, on_delete=models.CASCADE, related_name='comment')
+        quote = models.ForeignKey(QuotePost, on_delete=models.CASCADE, related_name='comments')
         parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True)
         author = models.ForeignKey(User, on_delete=models.CASCADE)
         created_date = models.DateTimeField(default=timezone.now)
         published_date = models.DateTimeField(blank=True, null=True)
-        likes = models.IntegerField(default=0)
-        comments = models.IntegerField(default=0)
+        likes = models.PositiveIntegerField(default=0)
+        comments = models.PositiveIntegerField(default=0)
 
         def publish(self):
             self.published_date = timezone.now()
