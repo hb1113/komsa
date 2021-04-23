@@ -6,4 +6,7 @@
 
 {% block content %}
     <h1>Quotes:</h1>
+    {% for quote in quotepost_list %}
+        <a href="{% url 'quote:detail' quote.pk %}">{{ quote.text }}</a>
+    {% endfor %}
 {% endblock %}
