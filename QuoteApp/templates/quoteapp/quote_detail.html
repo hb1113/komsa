@@ -12,6 +12,7 @@
     comments: <small>{{ quotepost.comments }}</small>
     shares: <small>{{ quotepost.shares }}</small>
     <hr>
+    <a href="{% url 'quote:comment' quotepost.id %}">Add Comment</a>
     {% for comment in quotepost.quotecomments.all %}
         <br>
         {{ comment.text }}, by: {{ comment.author }}<br>
