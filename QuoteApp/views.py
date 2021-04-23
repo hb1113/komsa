@@ -28,11 +28,9 @@ class QuoteDetailView(DetailView):
 
 class CreateQuotePostView(CreateView):
     login_required = True
-    form_class = QuoteForm
     model = QuotePost
     fields = ['text']
-
-
+    success_url = reverse_lazy('quote:list')
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
