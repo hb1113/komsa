@@ -10,7 +10,7 @@ class QuotePost(models.Model):
     text = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_date = models.DateTimeField(default=timezone.now)
-    published_date = models.DateTimeField(blank=True, null=True)
+    published_date = models.DateTimeField(default=timezone.now,blank=True, null=True)
     likes = models.PositiveIntegerField(default=0)
     comments = models.PositiveIntegerField(default=0)
     shares = models.PositiveIntegerField(default=0)
