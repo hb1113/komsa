@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Add new Comment
+{% endblock %}
+
+{% block content %}
+    <h1>Add New Comment:</h1>
+    {% if user.is_authenticated %}
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="save">
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+{% endblock %}
