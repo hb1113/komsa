@@ -66,6 +66,7 @@ def quote_comment_view(request, pk):
         form = QuoteCommentForm(request.POST)
         if form.is_valid():
             obj = form.save(commit=False)
+            obj.author = request.user
             obj.quote = quote
             obj.save()
             return redirect('quote:detail', pk=quote.pk)
