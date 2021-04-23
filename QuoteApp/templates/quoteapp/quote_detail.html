@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Quote List
+{% endblock %}
+
+{% block content %}
+    <h1>Quotes:</h1>
+    {{ quotepost.text }} by: {{ quotepost.author }}<br>
+    date: {{ quotepost.created_date|date:'d-m-Y' }}<br>
+    likes: <small>{{ quotepost.likes }}</small>
+    comments: <small>{{ quotepost.comments }}</small>
+    shares: <small>{{ quotepost.shares }}</small>
+    <hr>
+    {% for comment in quotepost.quotecomments.all %}
+        <br>
+        {{ comment.text }}, by: {{ comment.author }}<br>
+        date: {{ comment.created_date|date:'d-m-Y' }}<br>
+        likes: <small>{{ comment.likes }}</small>
+        comments: <small>{{ comment.comments }}</small><br>
+        --------------------------------------------------
+    {% endfor %}
+{% endblock %}
