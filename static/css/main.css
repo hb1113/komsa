@@ -1,0 +1,22 @@
+a{
+    text-decoration: none;
+}
+#like-btn{
+    padding: 0;
+    border: none;
+    background: none;
+}
+.fas{
+  color: black;
+}
+#back-to-list-test{
+  color:red;
+  text-align: right;
+  background-color: lightblue;
+}
+#back-to-list-arrow{
+  background-color: lightgray;
+  padding-left: 3px;
+  align-items: center;
+  border-radius: 50%;
+}
