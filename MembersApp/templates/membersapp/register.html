@@ -1,17 +1,21 @@
 {% extends 'base.html' %}
 
 {% block titleblock %}
-  Register
+  ثبت نام
 {% endblock %}
 
-{% block bodyblock %}
+{% block content %}
 
-  <h1>Register:</h1>
-  
+  <h1>ثبت نام:</h1>
+
   <form class="form-group" method="POST">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input class="btn btn-success" type="submit" name="" value="Register">
+    <p>{{ form.first_name }}</p>
+    <p class="control-form">Email: {{ form.email }}</p>
+    <p>user:{{ form.username }}</p>
+    <p>pass1: {{ form.password1 }}</p>
+    <p>pass2: {{ form.password2 }}</p>
+    <input class="btn btn-success" type="submit" name="" value="ثبت">
   </form>
 
 {% endblock %}

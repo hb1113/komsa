@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block titleblock %}
-  Login
+  ورود
 {% endblock %}
 
 {% block content %}
-  <h1>Login:</h1>
+  <h1>ورود:</h1>
   <form method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" name="" value="Login">
+    <input type="submit" name="" value="ورود">
   </form>
 {% endblock %}
