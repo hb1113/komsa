@@ -5,14 +5,15 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Add New Quote:</h1>
+    <h1>حکایت جدید</h1>
     {% if user.is_authenticated %}
         <form method="POST">
             {% csrf_token %}
-            {{ form.as_p }}
+            <div class="quote-text control-form">{{ form.text }}</div>
+            <div class="quote-tag">{{ form.tag }}</div>
             <input type="submit" value="save">
         </form>
     {% else %}
-        <a href="{% url 'login' %}">Login</a>
+        <a href="{% url 'login' %}">ورود</a>
     {% endif %}
 {% endblock %}
