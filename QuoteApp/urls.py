@@ -13,5 +13,6 @@ urlpatterns = [
     path('comment/<int:pk>/approve/', views.quote_comment_approve, name='comment-approve'),
     path('comment/<int:pk>/delete', views.quote_comment_delete, name='delete'),
     path('<int:pk>/publish', views.quote_post_publish, name='publish'),
+    path('<int:pk>/like', views.quote_post_like, name='like'),
     path('about/', views.AboutQuoteView.as_view(), name='about'),
 ]
