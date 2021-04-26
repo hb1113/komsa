@@ -3,7 +3,8 @@ from django.views.generic import TemplateView, ListView, DetailView, CreateView,
 from .models import QuotePost, QuoteComment
 from .forms import QuoteForm, QuoteCommentForm
 from django.utils import timezone
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
+from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 # Create your views here.
@@ -25,12 +26,21 @@ class QuoteDetailView(DetailView):
     model = QuotePost
     template_name = 'quoteapp/quote_detail.html'
 
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+
+        quote_like = get_object_or_404(QuotePost, id=self.kwargs['pk'])
+        data['sum_like'] = quote_like.sum_likes()
+        data['sum_comment'] = quote_like.sum_comments()
+        return data
+
 
 class CreateQuotePostView(CreateView):
     login_required = True
     model = QuotePost
-    fields = ['text']
+    fields = ['text', 'tag']
     success_url = reverse_lazy('quote:list')
+
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
@@ -55,6 +65,17 @@ class DraftQuoteListView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return QuotePost.objects.filter(published_date__isnull=True).order_by('created_date')
+
+
+def quote_post_like(request, pk):
+    quote = get_object_or_404(QuotePost, id=request.POST.get('quotepost_id'))
+    if quote.likes.filter(id=request.user.id).exists():
+        quote.likes.remove(request.user)
+    else:
+        quote.likes.add(request.user)
+
+    return HttpResponseRedirect(reverse('quote:detail', args=[str(pk)]))
+
 
 ###############################
 
