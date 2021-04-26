@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
-# Create your models here.
+from taggit.managers import TaggableManager
 
 
 class QuotePost(models.Model):
@@ -10,10 +10,16 @@ class QuotePost(models.Model):
     text = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     created_date = models.DateTimeField(default=timezone.now)
-    published_date = models.DateTimeField(default=timezone.now,blank=True, null=True)
-    likes = models.PositiveIntegerField(default=0)
-    comments = models.PositiveIntegerField(default=0)
+    published_date = models.DateTimeField(default=timezone.now, blank=True, null=True)
+    tag = TaggableManager()
+    likes = models.ManyToManyField(User, related_name='quote_post_likes')
     shares = models.PositiveIntegerField(default=0)
+
+    def sum_likes(self):
+        return self.likes.count()
+
+    def sum_comments(self):
+        return self.quotecomments.count()
 
     def publish(self):
         self.published_date = timezone.now()
@@ -24,6 +30,9 @@ class QuotePost(models.Model):
 
     def __str__(self):
         return f"{ self.text }, by: {self.author}"
+
+    # def count_posts_of(author):
+    #     return QuotePost.objects.filter(author=author).count()
 
 
 class QuoteComment(models.Model):
