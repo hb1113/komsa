@@ -5,10 +5,10 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Quotes:</h1>
-    <a href="{% url 'quote:new' %}">New Quote</a><br>
+    <h1>حکایات:</h1>
+    <a href="{% url 'quote:new' %}">جدید</a><br>
     {% for quote in quotepost_list %}
         <br>
-        <a href="{% url 'quote:detail' quote.pk %}">{{ quote.text }}</a>
+        <a href="{% url 'quote:detail' quote.pk %}">{{ quote.id}}: {{ quote.text|slice:":200" }}</a>
     {% endfor %}
 {% endblock %}

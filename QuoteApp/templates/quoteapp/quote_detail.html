@@ -1,24 +1,95 @@
 {% extends 'base.html' %}
-
 {% block title %}
-    Quote List
+    جزئیات حکایت
 {% endblock %}
 
 {% block content %}
-    <h1>Quotes:</h1>
-    {{ quotepost.text }} by: {{ quotepost.author }}<br>
-    date: {{ quotepost.created_date|date:'d-m-Y' }}<br>
-    likes: <small>{{ quotepost.likes }}</small>
-    comments: <small>{{ quotepost.comments }}</small>
-    shares: <small>{{ quotepost.shares }}</small>
+  <div class="container">
+    <div class="container">
+      <a href="{% url 'quote:list' %}">
+        <div class="row">
+          <div class="col-1" id="back-to-list-arrow">
+            <i class="fas fa-long-arrow-alt-right"></i>
+          </div>
+          <div class="col-9" id="back-to-list-text">
+            لیست حکایات
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <p>{{ quotepost.text }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          {% for t in quotepost.tag.all %}
+            <span><a href="#">{{ t }}</a></span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+          <p>نوشته شده توسط: {{ quotepost.author }}</p>
+        </div>
+        <div class="col-6">
+          <p>{{ quotepost.created_date|date:'d-m-Y' }}</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-4">
+            <form action="{% url 'quote:like' quotepost.pk %}"  method="POST">
+              {% csrf_token %}
+              {{ sum_like }}  :<button id="like-btn" name="quotepost_id" type="submit" value="{{ quotepost.id }}"><i class="fas fa-thumbs-up"></i></button>
+            </form>
+          </div>
+          <div class="col-4">
+            {{ sum_comment }}  :<a href="{% url 'quote:comment' quotepost.id %}"><i class="fas fa-comments"></i></a>
+          </div>
+          <div class="col-4">
+            {{ quotepost.shares }}  :<a href="#"><i class="fas fa-share-alt"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
     <hr>
-    <a href="{% url 'quote:comment' quotepost.id %}">Add Comment</a>
-    {% for comment in quotepost.quotecomments.all %}
-        <br>
-        {{ comment.text }}, by: {{ comment.author }}<br>
-        date: {{ comment.created_date|date:'d-m-Y' }}<br>
-        likes: <small>{{ comment.likes }}</small>
-        comments: <small>{{ comment.comments }}</small><br>
-        --------------------------------------------------
-    {% endfor %}
+  </div>
+
+  <div class="container">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <a href="{% url 'quote:comment' quotepost.id %}"><i class="fas fa-comment"></i>+</a>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          {% for comment in quotepost.quotecomments.all %}
+              <br>
+              {{ comment.text }}, by: {{ comment.author }}<br>
+              date: {{ comment.created_date|date:'d-m-Y' }}<br>
+              likes: <small>{{ comment.likes }}</small>
+              comments: <small>{{ comment.comments }}</small><br>
+              <hr>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 {% endblock %}
