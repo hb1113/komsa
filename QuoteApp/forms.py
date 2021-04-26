@@ -6,10 +6,17 @@ class QuoteForm(forms.ModelForm):
 
     class Meta:
         model = QuotePost
-        fields = ['text']
+        fields = ['text', 'tag']
 
         widgets = {
-            'text': forms.Textarea(attrs={'class': 'form-control'}),
+            "text": forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'text',
+            }),
+            "tag": forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'tags',
+            })
         }
 
 
